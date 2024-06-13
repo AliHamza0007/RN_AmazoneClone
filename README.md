@@ -4,7 +4,7 @@
 This project is a clone of Amazon, featuring a product listing using a REST API, sliders, and other UI components.
 
 
-<img width="100" src="./show//1.png" height="100"/>
+<img width="100%" src="./show//1.png" height="100%"/>
 ![Screenshot 1](./show/1.png)
 ![Screenshot 1](./show/2.png)
 ![Screenshot 1](./show/3.png)
