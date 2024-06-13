@@ -1,29 +1,40 @@
-import React, {useState} from 'react';
-import {View, Image, Dimensions} from 'react-native';
-import Carousel, {Pagination} from 'react-native-snap-carousel';
-import {SliderData} from '../Utils';
+import React, { useState, useEffect } from 'react';
+import { View, Image, Dimensions, StyleSheet } from 'react-native';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
+import { SliderData } from '../Utils'; // Ensure you have your SliderData defined in Utils or replace this with your actual data
 
 const MyCarousel = () => {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [sliderWidth, setSliderWidth] = useState(Dimensions.get('screen').width);
 
-  const renderItem = ({item}) => {
+  useEffect(() => {
+    const handleResize = () => {
+      setSliderWidth(Dimensions.get('screen').width);
+    };
+
+    Dimensions.addEventListener('change', handleResize);
+
+    return () => {
+      Dimensions.removeEventListener('change', handleResize);
+    };
+  }, []);
+
+  const renderItem = ({ item }) => {
     return (
-      <View>
-        <Image source={item.image} className="w-full h-60" />
+      <View style={styles.itemContainer}>
+        <Image source={item.image} style={styles.image} resizeMode="cover" />
       </View>
     );
   };
 
-  const sliderWidth = Dimensions.get('screen').width;
-
   return (
-    <View className="relative">
+    <View style={styles.container}>
       <Carousel
         data={SliderData}
         renderItem={renderItem}
         sliderWidth={sliderWidth}
         itemWidth={sliderWidth}
-        autoplayInterval={2000}
+        autoplayInterval={3000}
         autoplay
         loop
         onSnapToItem={index => setActiveSlide(index)}
@@ -31,17 +42,9 @@ const MyCarousel = () => {
       <Pagination
         dotsLength={SliderData.length}
         activeDotIndex={activeSlide}
-        containerStyle={{
-          position: 'absolute',
-          bottom: 0,
-          left: '15%',
-        }}
-        dotStyle={{
-          width: 10,
-          height: 10,
-          borderRadius: 5,
-        }}
-        inactiveDotStyle={{width: 15, height: 15, borderRadius: 10}}
+        containerStyle={styles.paginationContainer}
+        dotStyle={styles.activeDot}
+        inactiveDotStyle={styles.inactiveDot}
         inactiveDotOpacity={0.4}
         inactiveDotScale={0.6}
         dotColor="green"
@@ -50,5 +53,35 @@ const MyCarousel = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  itemContainer: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: '100%',
+    height: 200, // You can adjust this height based on your needs
+  },
+  paginationContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: '15%',
+  },
+  activeDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+  },
+  inactiveDot: {
+    width: 15,
+    height: 15,
+    borderRadius: 10,
+  },
+});
 
 export default MyCarousel;
