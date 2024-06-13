@@ -3,13 +3,13 @@
 
 This project is a clone of Amazon, featuring a product listing using a REST API, sliders, and other UI components.
 
-
+<div className="d-flex">
 <img width="25%" src="./show/1.png" height="40%"/>
 <img width="25%" src="./show/2.png" height="40%"/>
 <img width="25%" src="./show/3.png" height="40%"/>
 <img width="25%" src="./show/4.png" height="40%"/>
 <img width="25%" src="./show/5.png" height="40%"/>
-
+</div>
 ## Table of Contents
 
 - [Demo](#demo)
